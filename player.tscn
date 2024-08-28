@@ -1,0 +1,145 @@
+[gd_scene load_steps=17 format=3 uid="uid://b53ek8hx5piin"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_fsrv3"]
+[ext_resource type="Texture2D" uid="uid://cdl076wrwxkrf" path="res://Mini Pixel Pack 3/Player ship/Player_ship (16 x 16).png" id="3_bgmss"]
+[ext_resource type="Texture2D" uid="uid://dd6q3at7vbetd" path="res://Mini Pixel Pack 3/Player ship/Boosters (16 x 16).png" id="4_4yms1"]
+[ext_resource type="Texture2D" uid="uid://csvhx7v43i5t5" path="res://Mini Pixel Pack 3/Player ship/Boosters_left (16 x 16).png" id="5_udrks"]
+[ext_resource type="Texture2D" uid="uid://bf46kenssh74w" path="res://Mini Pixel Pack 3/Player ship/Boosters_right (16 x 16).png" id="6_w7s26"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3syt7"]
+size = Vector2(12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6dwq5"]
+atlas = ExtResource("4_4yms1")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b2fpt"]
+atlas = ExtResource("4_4yms1")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3o2ok"]
+atlas = ExtResource("5_udrks")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ba3c3"]
+atlas = ExtResource("5_udrks")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jekq3"]
+atlas = ExtResource("6_w7s26")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3dquc"]
+atlas = ExtResource("6_w7s26")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4rqro"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6dwq5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b2fpt")
+}],
+"loop": true,
+"name": &"forward",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3o2ok")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ba3c3")
+}],
+"loop": true,
+"name": &"left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jekq3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3dquc")
+}],
+"loop": true,
+"name": &"right",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_c1v03"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_0hclx"]
+resource_name = "rcvd_dmg"
+length = 3.5
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.675659, 1.75677e-06, 5.29438e-07, 1), Color(1, 1, 1, 1), Color(0.675659, 1.75677e-06, 5.29438e-07, 1), Color(1, 1, 1, 1), Color(0.675659, 1.75677e-06, 5.29438e-07, 1), Color(1, 1, 1, 1), Color(0.675659, 1.75677e-06, 5.29438e-07, 1), Color(1, 1, 1, 1), Color(0.675659, 1.75677e-06, 5.29438e-07, 1), Color(1, 1, 1, 1), Color(0.675659, 1.75677e-06, 5.29438e-07, 1), Color(1, 1, 1, 1), Color(0.675659, 1.75677e-06, 5.29438e-07, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qbg7p"]
+_data = {
+"RESET": SubResource("Animation_c1v03"),
+"rcvd_dmg": SubResource("Animation_0hclx")
+}
+
+[node name="Player" type="Area2D" groups=["player"]]
+script = ExtResource("1_fsrv3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_bgmss")
+hframes = 3
+frame = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_3syt7")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_4rqro")
+animation = &"forward"
+autoplay = "forward"
+frame_progress = 0.931145
+offset = Vector2(0, 15)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_qbg7p")
+}
+
+[node name="BulletTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="BurstTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="DamageTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="timeout" from="BulletTimer" to="." method="_on_bullet_timer_timeout"]
+[connection signal="timeout" from="BurstTimer" to="." method="_on_burst_timer_timeout"]
+[connection signal="timeout" from="DamageTimer" to="." method="_on_damage_timer_timeout"]
