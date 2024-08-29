@@ -64,7 +64,7 @@ func _on_burst_timer_timeout() -> void: can_burst = true
 var can_take_dmg: bool = true
 
 func _on_area_entered(area: Area2D) -> void:
-	if area.is_in_group("enemy"): damage(area.health)
+	if area.is_in_group("enemy") and is_in_group("player"): damage(area.health)
 
 func damage(dmg: int) -> void:
 	if not can_take_dmg: return

@@ -11,7 +11,7 @@ func spawn_enemies():
 			var e = enemy.instantiate()
 			var pos = Vector2(i * (16 + 8) + 24, 16 * 4 + j * 16)
 			add_child(e)
-			e.create(enemies[randi_range(0, 2)], randi_range(1, 5), $Player, self)
+			e.create(enemies[randi_range(0, 2)], randi_range(1, 3), $Player, self)
 			e.position = pos
 
 func _ready() -> void:
@@ -28,6 +28,7 @@ func _process(_delta: float) -> void:
 func game_over() -> void:
 	$Background.z_index = 98
 	$GameOverScreen.visible = true
+	$Player.remove_from_group("player")
 
 func _on_texture_button_pressed() -> void:
 	if $GameOverScreen.visible == false: return
